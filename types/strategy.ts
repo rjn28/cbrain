@@ -47,4 +47,26 @@ export interface MistralStrategyData {
     qdrant: string
     qdrantDetail: string
   }
+  competitors: {
+    competitor1: string
+    competitor1Detail: string
+    competitor2: string
+    competitor2Detail: string
+    competitor3: string
+    competitor3Detail: string
+    competitor4: string
+    competitor4Detail: string
+    competitor5: string
+    competitor5Detail: string
+    competitor6: string
+    competitor6Detail: string
+    competitor7?: string
+    competitor7Detail?: string
+    competitor8?: string
+    competitor8Detail?: string
+    competitor9?: string
+    competitor9Detail?: string
+    competitor10?: string
+    competitor10Detail?: string
+  }
 }

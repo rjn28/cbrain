@@ -61,6 +61,7 @@ export function createNodesFromMistral(strategy: MistralStrategyData): Node[] {
     { id: "how", label: "💻 Comment\nStack", x: 540, color: "#10b981" },
     { id: "when", label: "📅 Quand\nPlanning", x: 760, color: "#f59e0b" },
     { id: "unicorn", label: "✨ Agents IA", x: 980, color: "#ec4899" },
+    { id: "competitors", label: "🏆 Concurrents", x: 1200, color: "#ef4444" },
   ]
 
   mainNodes.forEach(node => {
@@ -218,15 +219,60 @@ export function createNodesFromMistral(strategy: MistralStrategyData): Node[] {
     })
   })
 
+  // Sous-nodes Concurrents
+  const competitorNodes: Array<{ id: string; label: string; detail: string; y: number }> = []
+  let competitorY = 410
+  
+  // Extraire les concurrents de la stratégie (competitor1 à competitor10)
+  if (strategy.competitors) {
+    for (let i = 1; i <= 10; i++) {
+      const competitorKey = `competitor${i}` as keyof typeof strategy.competitors
+      const competitorDetailKey = `competitor${i}Detail` as keyof typeof strategy.competitors
+      
+      if (strategy.competitors[competitorKey] && strategy.competitors[competitorDetailKey]) {
+        const competitorText = String(strategy.competitors[competitorKey])
+        const competitorName = competitorText.split(' - ')[0] || `Concurrent ${i}`
+        competitorNodes.push({
+          id: `competitor-${i}`,
+          label: `🏢 ${competitorName}`,
+          detail: String(strategy.competitors[competitorDetailKey]),
+          y: competitorY,
+        })
+        competitorY += 130
+      }
+    }
+  }
+
+  competitorNodes.forEach(node => {
+    nodes.push({
+      id: node.id,
+      data: { label: node.label, detail: node.detail },
+      position: { x: 1120, y: node.y },
+      style: {
+        background: "white",
+        color: "#1f2937",
+        border: "2px solid #ef4444",
+        borderRadius: "8px",
+        padding: "14px 18px",
+        fontSize: "13px",
+        minWidth: "180px",
+        textAlign: "center",
+        whiteSpace: "pre-line",
+        cursor: "pointer",
+      },
+    })
+  })
+
   return nodes
 }
 
 /**
  * Crée les connexions (edges) entre les nœuds de l'arbre
+ * @param strategy - Données de stratégie pour générer les edges des concurrents dynamiquement
  * @returns Liste des edges pour React Flow
  */
-export function createEdgesFromMistral(): Edge[] {
-  return [
+export function createEdgesFromMistral(strategy?: MistralStrategyData): Edge[] {
+  const edges: Edge[] = [
     // Connexion root -> project-name
     { id: "e-root-project", source: "root", target: "project-name", animated: true, style: { stroke: "#667eea", strokeWidth: 3 } },
     
@@ -236,6 +282,7 @@ export function createEdgesFromMistral(): Edge[] {
     { id: "e-project-how", source: "project-name", target: "how", animated: true, style: { stroke: "#10b981", strokeWidth: 2 } },
     { id: "e-project-when", source: "project-name", target: "when", animated: true, style: { stroke: "#f59e0b", strokeWidth: 2 } },
     { id: "e-project-unicorn", source: "project-name", target: "unicorn", animated: true, style: { stroke: "#ec4899", strokeWidth: 2 } },
+    { id: "e-project-competitors", source: "project-name", target: "competitors", animated: true, style: { stroke: "#ef4444", strokeWidth: 2 } },
     
     // Pourquoi
     { id: "e-why-persona", source: "why", target: "why-persona", animated: true, style: { stroke: "#3b82f6", strokeWidth: 1.5 } },
@@ -263,4 +310,24 @@ export function createEdgesFromMistral(): Edge[] {
     { id: "e-unicorn-elevenlabs", source: "unicorn", target: "unicorn-elevenlabs", animated: true, style: { stroke: "#ec4899", strokeWidth: 1.5 } },
     { id: "e-unicorn-qdrant", source: "unicorn", target: "unicorn-qdrant", animated: true, style: { stroke: "#ec4899", strokeWidth: 1.5 } },
   ]
+
+  // Ajouter les edges pour les concurrents
+  if (strategy?.competitors) {
+    for (let i = 1; i <= 10; i++) {
+      const competitorKey = `competitor${i}` as keyof typeof strategy.competitors
+      const competitorDetailKey = `competitor${i}Detail` as keyof typeof strategy.competitors
+      
+      if (strategy.competitors[competitorKey] && strategy.competitors[competitorDetailKey]) {
+        edges.push({
+          id: `e-competitors-${i}`,
+          source: "competitors",
+          target: `competitor-${i}`,
+          animated: true,
+          style: { stroke: "#ef4444", strokeWidth: 1.5 },
+        })
+      }
+    }
+  }
+
+  return edges
 }

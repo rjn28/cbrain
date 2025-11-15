@@ -143,6 +143,138 @@ IMPORTANT:
       )
     }
 
+    // Trouver les concurrents en parallèle
+    console.log('Recherche de concurrents...')
+    let competitors: Array<{ 
+      name: string
+      description: string
+      url?: string | null
+      pitch?: string
+      positioning?: string
+    }> = []
+    
+    try {
+      const contextText = `
+CONTEXTE:
+- Persona: ${strategy.strategie?.persona || 'Non spécifié'}
+- Problème résolu: ${strategy.strategie?.probleme || 'Non spécifié'}
+- Produit: ${strategy.produit?.concept || 'Non spécifié'}
+`
+
+      const competitorPrompt = `Tu es un expert en analyse concurrentielle et recherche de marché.
+À partir de l'idée suivante, trouve 4 à 10 concurrents directs ou indirects pertinents.
+
+IDÉE: "${idea}"
+${contextText}
+
+Tu dois retourner UNIQUEMENT un objet JSON valide avec cette structure EXACTE:
+{
+  "competitors": [
+    {
+      "name": "Nom du concurrent (ex: 'Notion', 'Figma', 'Stripe')",
+      "description": "Description courte du concurrent et pourquoi il est pertinent (15-25 mots)",
+      "url": "URL de la landing page principale (ex: https://notion.so, https://figma.com) - peut être null si non trouvée",
+      "pitch": "Court pitch expliquant ce que fait ce concurrent et leur proposition de valeur (20-30 mots)",
+      "positioning": "Stratégie de positionnement : comment se différencier ou se positionner par rapport à ce concurrent (15-20 mots)"
+    }
+  ]
+}
+
+IMPORTANT:
+- Trouve entre 4 et 10 concurrents HIGHLY RELEVANTS
+- Inclus des concurrents directs (même problème) et indirects (problème similaire)
+- Les URLs doivent être les landing pages principales (homepage), valides ou null
+- Le pitch doit expliquer clairement ce que fait le concurrent
+- Le positioning doit être actionnable et stratégique
+- Réponds UNIQUEMENT avec le JSON, rien d'autre`
+
+      const competitorResponse = await fetch('https://api.mistral.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${MISTRAL_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'mistral-small-latest',
+          messages: [
+            {
+              role: 'user',
+              content: competitorPrompt,
+            },
+          ],
+          temperature: 0.7,
+          max_tokens: 3000,
+        }),
+      })
+
+      if (competitorResponse.ok) {
+        const competitorData = await competitorResponse.json()
+        const competitorContent = competitorData.choices[0]?.message?.content
+
+        if (competitorContent) {
+          const cleanCompetitorContent = competitorContent
+            .replace(/```json\n?/g, '')
+            .replace(/```\n?/g, '')
+            .trim()
+
+          const parsedCompetitors = JSON.parse(cleanCompetitorContent)
+          competitors = parsedCompetitors.competitors || []
+
+          // Limiter à 10 concurrents maximum
+          if (competitors.length > 10) {
+            competitors = competitors.slice(0, 10)
+          }
+        }
+      } else {
+        console.warn('Erreur lors de la recherche de concurrents, continuation sans concurrents')
+      }
+    } catch (competitorError) {
+      console.error('Erreur lors de la recherche de concurrents:', competitorError)
+      // Continue même si la recherche de concurrents échoue
+    }
+
+    // Transformer les concurrents en format attendu (competitor1, competitor2, etc.)
+    const competitorsObject: Record<string, string> = {}
+    competitors.forEach((comp, index) => {
+      const num = index + 1
+      const shortLabel = comp.name.length > 30 ? comp.name.substring(0, 27) + '...' : comp.name
+      competitorsObject[`competitor${num}`] = `${shortLabel} - ${comp.description}`
+      
+      // Construire le détail avec toutes les informations
+      let detailText = `**${comp.name}**\n\n${comp.description}\n\n`
+      
+      if (comp.pitch) {
+        detailText += `**Pitch:** ${comp.pitch}\n\n`
+      }
+      
+      if (comp.url) {
+        detailText += `**Landing page:** [${comp.url}](${comp.url})\n\n`
+      }
+      
+      if (comp.positioning) {
+        detailText += `**Positionnement:** ${comp.positioning}`
+      }
+      
+      competitorsObject[`competitor${num}Detail`] = detailText.trim()
+    })
+
+    // S'assurer d'avoir au moins 4 concurrents (générer des placeholders si nécessaire)
+    while (competitors.length < 4) {
+      const num = competitors.length + 1
+      competitorsObject[`competitor${num}`] = `Concurrent ${num} - À analyser`
+      competitorsObject[`competitor${num}Detail`] = `**Concurrent ${num}**\n\nÀ analyser en détail.`
+      competitors.push({ 
+        name: `Concurrent ${num}`, 
+        description: 'À analyser', 
+        url: null,
+        pitch: undefined,
+        positioning: undefined
+      })
+    }
+
+    // Ajouter les concurrents à la stratégie
+    strategy.competitors = competitorsObject
+
     return NextResponse.json(strategy)
 
   } catch (error) {

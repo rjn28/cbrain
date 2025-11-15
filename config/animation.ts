@@ -27,24 +27,25 @@ export function createAnimationSequence(
     // 2. Nom du projet
     { delay: 700, nodes: [nodes[0], nodes[1]], edges: [edges[0]] },
     
-    // 3-7. Branches principales
+    // 3-8. Branches principales (ajout de competitors)
     { delay: 1000, nodes: nodes.slice(0, 3), edges: edges.slice(0, 2) },
     { delay: 1300, nodes: nodes.slice(0, 4), edges: edges.slice(0, 3) },
     { delay: 1600, nodes: nodes.slice(0, 5), edges: edges.slice(0, 4) },
     { delay: 1900, nodes: nodes.slice(0, 6), edges: edges.slice(0, 5) },
     { delay: 2200, nodes: nodes.slice(0, 7), edges: edges.slice(0, 6) },
+    { delay: 2500, nodes: nodes.slice(0, 8), edges: edges.slice(0, 7) },
     
-    // 8-11. Sous-nœuds progressifs
-    { delay: 2400, nodes: nodes.slice(0, 8), edges: edges.slice(0, 7) },
-    { delay: 2600, nodes: nodes.slice(0, 9), edges: edges.slice(0, 8) },
-    { delay: 2800, nodes: nodes.slice(0, 10), edges: edges.slice(0, 9) },
+    // 9+. Sous-nœuds progressifs (incluant concurrents)
+    { delay: 2700, nodes: nodes.slice(0, Math.min(9, nodes.length)), edges: edges.slice(0, Math.min(8, edges.length)) },
+    { delay: 2900, nodes: nodes.slice(0, Math.min(12, nodes.length)), edges: edges.slice(0, Math.min(11, edges.length)) },
+    { delay: 3100, nodes: nodes.slice(0, Math.min(15, nodes.length)), edges: edges.slice(0, Math.min(14, edges.length)) },
     
-    // 12. Tous les nœuds
-    { delay: 3000, nodes: nodes, edges: edges },
+    // Final. Tous les nœuds
+    { delay: 3300, nodes: nodes, edges: edges },
   ]
 }
 
 /**
  * Durée totale de l'animation en millisecondes
  */
-export const ANIMATION_DURATION = 3200
+export const ANIMATION_DURATION = 3500

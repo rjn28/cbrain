@@ -13,6 +13,7 @@ export const MAIN_NODE_IDS = [
   "how",
   "when",
   "unicorn",
+  "competitors",
 ] as const
 
 /**

@@ -48,6 +48,7 @@ export function generateMarkdown(strategy: MistralStrategyData): string {
   - [Fal.ai](#falai)
   - [ElevenLabs](#elevenlabs)
   - [Qdrant](#qdrant)
+- [Concurrents](#-concurrents)
 
 ---
 
@@ -164,6 +165,22 @@ ${strategy.agents.elevenlabsDetail}
 **${strategy.agents.qdrant}**
 
 ${strategy.agents.qdrantDetail}
+
+---
+
+## 🏆 Concurrents
+
+${Object.entries(strategy.competitors || {})
+  .filter(([key]) => key.endsWith('Detail'))
+  .map(([key, detail]) => {
+    const num = key.replace('competitor', '').replace('Detail', '')
+    const competitorKey = `competitor${num}` as keyof typeof strategy.competitors
+    const competitorName = strategy.competitors?.[competitorKey] 
+      ? String(strategy.competitors[competitorKey]).split(' - ')[0] 
+      : `Concurrent ${num}`
+    return `### Concurrent ${num}: ${competitorName}\n\n${detail}\n`
+  })
+  .join('\n')}
 
 ---
 

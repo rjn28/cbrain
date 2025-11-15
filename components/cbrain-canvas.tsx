@@ -80,7 +80,7 @@ export function CbrainCanvas({ onGenerate, mistralStrategyData }: CbrainCanvasPr
 
     setShowWorkflow(true)
     const strategyNodes = createNodesFromMistral(mistralStrategyData)
-    const strategyEdges = createEdgesFromMistral()
+    const strategyEdges = createEdgesFromMistral(mistralStrategyData)
 
     // Importer la séquence d'animation
     // eslint-disable-next-line @typescript-eslint/no-require-imports
