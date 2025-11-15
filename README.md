@@ -1,6 +1,14 @@
 # 🧠 cbrain - Générateur de Stratégie IA
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1480863b-67f2-40da-b46b-2e6fda2c1b1b/deploy-status)](https://app.netlify.com/sites/cbrain-stategy/deploys)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![Mistral AI](https://img.shields.io/badge/Mistral-AI-orange)](https://mistral.ai/)
+[![License](https://img.shields.io/badge/License-Private-red)](https://github.com/rjn28/cbrain)
+
 Application web interactive qui transforme n'importe quelle idée en stratégie complète visualisée sous forme d'arbre animé, propulsée par Mistral AI et React Flow.
+
+🔗 **[Demo Live](https://cbrain-stategy.netlify.app)** | 📚 **[Documentation](./docs/README.md)**
 
 ## ✨ Fonctionnalités
 
@@ -22,8 +30,8 @@ Application web interactive qui transforme n'importe quelle idée en stratégie 
 
 ```bash
 # Cloner le projet
-git clone <repo-url>
-cd cbrain-rebuild
+git clone https://github.com/rjn28/cbrain.git
+cd cbrain
 
 # Installer les dépendances
 npm install

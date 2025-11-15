@@ -71,7 +71,7 @@ Ou via l'interface web :
 
 ## 🔗 Liens utiles
 
-- **Repo GitHub** : https://github.com/TON_USERNAME/cbrain-strategy-generator
+- **Repo GitHub** : https://github.com/rjn28/cbrain
 - **Site Netlify** : https://cbrain-stategy.netlify.app
 - **Admin Netlify** : https://app.netlify.com/projects/cbrain-stategy
 
