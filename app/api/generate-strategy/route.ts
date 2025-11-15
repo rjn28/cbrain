@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getStrategyPrompt } from './prompt'
-import { getDemoStrategy } from '@/lib/demo-data'
+import { getComprehensiveStrategyPrompt } from './prompt-v2'
+import { getDemoStrategyV2 } from '@/lib/demo-data-v2'
 
 const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY
 const USE_DEMO_DATA = process.env.USE_DEMO_DATA === 'true'
@@ -72,13 +72,13 @@ export async function POST(request: NextRequest) {
 
     // Use demo data if configured or if API key is missing
     if (USE_DEMO_DATA || !MISTRAL_API_KEY) {
-      console.log('Using demo data...')
+      console.log('Using demo data v2...')
       await new Promise(resolve => setTimeout(resolve, 1500)) // Simulate API delay
-      return NextResponse.json(getDemoStrategy(idea))
+      return NextResponse.json(getDemoStrategyV2(idea))
     }
 
-    // Structured prompt for Mistral
-    const prompt = getStrategyPrompt(idea)
+    // Structured prompt for Mistral (v2 - 5 squares framework)
+    const prompt = getComprehensiveStrategyPrompt(idea)
 
     // Call Mistral API with retry logic
     console.log('Calling Mistral with retry logic...')
@@ -87,8 +87,8 @@ export async function POST(request: NextRequest) {
     try {
       response = await callMistralWithRetry(prompt)
     } catch (error) {
-      console.error('All retry attempts failed, falling back to demo data:', error)
-      return NextResponse.json(getDemoStrategy(idea))
+      console.error('All retry attempts failed, falling back to demo data v2:', error)
+      return NextResponse.json(getDemoStrategyV2(idea))
     }
 
     if (!response.ok) {
