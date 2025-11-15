@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
           },
         ],
         temperature: 0.7,
-        max_tokens: 4000,
+        max_tokens: 6000,
       }),
     })
 
@@ -70,17 +70,28 @@ export async function POST(request: NextRequest) {
     let strategy
     try {
       // Clean content (remove markdown code blocks if present)
-      const cleanContent = content
+      let cleanContent = content
         .replace(/```json\n?/g, '')
         .replace(/```\n?/g, '')
         .trim()
       
+      // Try to fix incomplete JSON by adding closing braces
+      const openBraces = (cleanContent.match(/{/g) || []).length
+      const closeBraces = (cleanContent.match(/}/g) || []).length
+      
+      if (openBraces > closeBraces) {
+        console.warn('Incomplete JSON detected, attempting to fix...')
+        cleanContent += '}'.repeat(openBraces - closeBraces)
+      }
+      
       strategy = JSON.parse(cleanContent)
     } catch (parseError) {
       console.error('Parsing error:', parseError)
-      console.error('Received content:', content)
+      console.error('Received content length:', content.length)
+      console.error('First 500 chars:', content.substring(0, 500))
+      console.error('Last 500 chars:', content.substring(content.length - 500))
       return NextResponse.json(
-        { error: 'Invalid response format', content },
+        { error: 'Invalid response format. The response may be too long or incomplete.', content: content.substring(0, 1000) },
         { status: 500 }
       )
     }
