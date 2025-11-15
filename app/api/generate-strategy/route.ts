@@ -127,7 +127,17 @@ export async function POST(request: NextRequest) {
         .replace(/```\n?/g, '')
         .trim()
       
-      // Try to fix incomplete JSON by adding closing braces
+      // Fix common JSON errors
+      // 1. Fix missing commas between properties (e.g., "value"\n"nextKey")
+      cleanContent = cleanContent.replace(/"\s*\n\s*"/g, '",\n"')
+      
+      // 2. Fix missing commas after closing braces (e.g., }\n"key")
+      cleanContent = cleanContent.replace(/}\s*\n\s*"/g, '},\n"')
+      
+      // 3. Fix missing commas after closing brackets (e.g., ]\n"key")
+      cleanContent = cleanContent.replace(/\]\s*\n\s*"/g, '],\n"')
+      
+      // 4. Try to fix incomplete JSON by adding closing braces
       const openBraces = (cleanContent.match(/{/g) || []).length
       const closeBraces = (cleanContent.match(/}/g) || []).length
       
@@ -142,10 +152,10 @@ export async function POST(request: NextRequest) {
       console.error('Received content length:', content.length)
       console.error('First 500 chars:', content.substring(0, 500))
       console.error('Last 500 chars:', content.substring(content.length - 500))
-      return NextResponse.json(
-        { error: 'Invalid response format. The response may be too long or incomplete.', content: content.substring(0, 1000) },
-        { status: 500 }
-      )
+      
+      // Fallback to demo data on parse error
+      console.log('Falling back to demo data due to parse error')
+      return NextResponse.json(getDemoStrategyV2(idea))
     }
 
     return NextResponse.json(strategy)

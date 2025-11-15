@@ -8,10 +8,10 @@
 export const MAIN_NODE_IDS = [
   "root",
   "project-name",
-  "why",
-  "what",
-  "how",
-  "when",
+  "vision",
+  "solution",
+  "model",
+  "growth",
   "unicorn",
 ] as const
 

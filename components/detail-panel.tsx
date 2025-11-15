@@ -80,7 +80,7 @@ export function DetailPanel({ isOpen, onClose, title, detail }: DetailPanelProps
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black/30 backdrop-blur-md z-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/30 backdrop-blur-md z-60 transition-opacity duration-300 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={handleClose}
@@ -88,7 +88,7 @@ export function DetailPanel({ isOpen, onClose, title, detail }: DetailPanelProps
 
       {/* Panel */}
       <div
-        className={`fixed top-1/2 left-1/2 -translate-x-1/2 w-[650px] max-w-[90vw] max-h-[85vh] bg-white z-50 rounded-2xl transition-all duration-300 ease-out overflow-hidden ${
+        className={`fixed top-1/2 left-1/2 -translate-x-1/2 w-[650px] max-w-[90vw] max-h-[85vh] bg-white z-70 rounded-2xl transition-all duration-300 ease-out overflow-hidden ${
           isAnimating ? '-translate-y-1/2 opacity-100 scale-100 shadow-[0_20px_60px_rgba(0,0,0,0.3)]' : '-translate-y-[45%] opacity-0 scale-95 shadow-none'
         }`}
       >

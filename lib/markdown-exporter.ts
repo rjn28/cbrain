@@ -3,6 +3,7 @@
  */
 
 import type { MistralStrategyData } from "@/types/strategy"
+import type { ComprehensiveStrategy } from "@/types/strategy-v2"
 
 /**
  * Génère un fichier Markdown à partir des données de stratégie
@@ -204,4 +205,288 @@ export function sanitizeFilename(title: string): string {
     .replace(/[\u0300-\u036f]/g, "") // Enlever les accents
     .replace(/[^a-z0-9]+/g, "-") // Remplacer les caractères spéciaux par des tirets
     .replace(/^-+|-+$/g, "") // Enlever les tirets au début et à la fin
+}
+
+/**
+ * Génère un fichier Markdown à partir des données de stratégie v2
+ * @param strategy - Données de la stratégie ComprehensiveStrategy
+ * @returns Contenu Markdown formaté
+ */
+export function generateMarkdownV2(strategy: ComprehensiveStrategy): string {
+  const date = new Date().toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+
+  return `# ${strategy.projectName}
+
+> ${strategy.tagline}
+
+**Date de génération** : ${date}  
+**Généré par** : cbrain + Mistral AI
+
+---
+
+## 📋 Table des matières
+
+- [Vision](#-vision)
+  - [Stratégie](#stratégie)
+  - [Étude de marché](#étude-de-marché)
+- [Solution](#-solution)
+  - [MVP](#mvp)
+- [Modèle](#-modèle)
+  - [Business Model](#business-model)
+  - [Stack Technique](#stack-technique)
+- [Croissance](#-croissance)
+  - [Timeline de lancement](#timeline-de-lancement)
+  - [Stratégie de croissance](#stratégie-de-croissance)
+- [Unicorn](#-unicorn)
+  - [KPIs](#kpis)
+  - [Apprentissages](#apprentissages)
+  - [Agents IA](#agents-ia)
+
+---
+
+## 🎯 Vision
+
+### Stratégie
+
+#### Vision
+**${strategy.vision.strategy.vision}**
+
+${strategy.vision.strategy.visionDetail}
+
+#### Mission
+**${strategy.vision.strategy.mission}**
+
+${strategy.vision.strategy.missionDetail}
+
+#### Valeurs
+**${strategy.vision.strategy.values}**
+
+${strategy.vision.strategy.valuesDetail}
+
+### Étude de marché
+
+#### Taille du marché
+**${strategy.vision.marketStudy.marketSize}**
+
+${strategy.vision.marketStudy.marketSizeDetail}
+
+#### Concurrence
+**${strategy.vision.marketStudy.competition}**
+
+${strategy.vision.marketStudy.competitionDetail}
+
+#### Opportunité
+**${strategy.vision.marketStudy.opportunity}**
+
+${strategy.vision.marketStudy.opportunityDetail}
+
+#### Segment cible
+**${strategy.vision.marketStudy.targetSegment}**
+
+${strategy.vision.marketStudy.targetSegmentDetail}
+
+---
+
+## 💡 Solution
+
+### MVP
+
+#### Concept
+**${strategy.solution.mvp.concept}**
+
+${strategy.solution.mvp.conceptDetail}
+
+#### Fonctionnalité principale 1
+**${strategy.solution.mvp.coreFeature1}**
+
+${strategy.solution.mvp.coreFeature1Detail}
+
+#### Fonctionnalité principale 2
+**${strategy.solution.mvp.coreFeature2}**
+
+${strategy.solution.mvp.coreFeature2Detail}
+
+#### Fonctionnalité principale 3
+**${strategy.solution.mvp.coreFeature3}**
+
+${strategy.solution.mvp.coreFeature3Detail}
+
+#### Expérience utilisateur
+**${strategy.solution.mvp.userExperience}**
+
+${strategy.solution.mvp.userExperienceDetail}
+
+#### Différenciation
+**${strategy.solution.mvp.differentiation}**
+
+${strategy.solution.mvp.differentiationDetail}
+
+---
+
+## 💼 Modèle
+
+### Business Model
+
+#### Sources de revenus
+**${strategy.model.businessModel.revenueStreams}**
+
+${strategy.model.businessModel.revenueStreamsDetail}
+
+#### Stratégie de pricing
+**${strategy.model.businessModel.pricingStrategy}**
+
+${strategy.model.businessModel.pricingStrategyDetail}
+
+#### Structure de coûts
+**${strategy.model.businessModel.costStructure}**
+
+${strategy.model.businessModel.costStructureDetail}
+
+#### Unit Economics
+**${strategy.model.businessModel.unitEconomics}**
+
+${strategy.model.businessModel.unitEconomicsDetail}
+
+### Stack Technique
+
+#### Frontend
+**${strategy.model.techStack.frontend}**
+
+${strategy.model.techStack.frontendDetail}
+
+#### Backend
+**${strategy.model.techStack.backend}**
+
+${strategy.model.techStack.backendDetail}
+
+#### Infrastructure
+**${strategy.model.techStack.infrastructure}**
+
+${strategy.model.techStack.infrastructureDetail}
+
+#### Outils IA
+**${strategy.model.techStack.aiTools}**
+
+${strategy.model.techStack.aiToolsDetail}
+
+#### Sécurité
+**${strategy.model.techStack.security}**
+
+${strategy.model.techStack.securityDetail}
+
+---
+
+## 📈 Croissance
+
+### Timeline de lancement
+
+#### Phase 1: ${strategy.growth.launchTimeline.phase1}
+**Durée**: ${strategy.growth.launchTimeline.phase1Duration}
+
+${strategy.growth.launchTimeline.phase1Detail}
+
+#### Phase 2: ${strategy.growth.launchTimeline.phase2}
+**Durée**: ${strategy.growth.launchTimeline.phase2Duration}
+
+${strategy.growth.launchTimeline.phase2Detail}
+
+#### Phase 3: ${strategy.growth.launchTimeline.phase3}
+**Durée**: ${strategy.growth.launchTimeline.phase3Duration}
+
+${strategy.growth.launchTimeline.phase3Detail}
+
+### Stratégie de croissance
+
+#### Canaux d'acquisition
+**${strategy.growth.growthStrategy.acquisitionChannels}**
+
+${strategy.growth.growthStrategy.acquisitionChannelsDetail}
+
+#### Stratégie de rétention
+**${strategy.growth.growthStrategy.retentionStrategy}**
+
+${strategy.growth.growthStrategy.retentionStrategyDetail}
+
+#### Plan de scaling
+**${strategy.growth.growthStrategy.scalingPlan}**
+
+${strategy.growth.growthStrategy.scalingPlanDetail}
+
+#### Partenariats
+**${strategy.growth.growthStrategy.partnerships}**
+
+${strategy.growth.growthStrategy.partnershipsDetail}
+
+---
+
+## 🦄 Unicorn
+
+### KPIs
+
+#### North Star Metric
+**${strategy.unicorn.kpis.northStarMetric}**
+
+${strategy.unicorn.kpis.northStarMetricDetail}
+
+#### Métriques d'acquisition
+**${strategy.unicorn.kpis.acquisitionMetrics}**
+
+${strategy.unicorn.kpis.acquisitionMetricsDetail}
+
+#### Métriques d'engagement
+**${strategy.unicorn.kpis.engagementMetrics}**
+
+${strategy.unicorn.kpis.engagementMetricsDetail}
+
+#### Métriques de revenus
+**${strategy.unicorn.kpis.revenueMetrics}**
+
+${strategy.unicorn.kpis.revenueMetricsDetail}
+
+### Apprentissages
+
+#### Hypothèses
+**${strategy.unicorn.learnings.assumptions}**
+
+${strategy.unicorn.learnings.assumptionsDetail}
+
+#### Expérimentations
+**${strategy.unicorn.learnings.experiments}**
+
+${strategy.unicorn.learnings.experimentsDetail}
+
+#### Stratégie de pivot
+**${strategy.unicorn.learnings.pivotStrategy}**
+
+${strategy.unicorn.learnings.pivotStrategyDetail}
+
+### Agents IA
+
+#### Agent 1: ${strategy.unicorn.aiAgents.agent1}
+**Impact**: ${strategy.unicorn.aiAgents.agent1Impact}
+
+${strategy.unicorn.aiAgents.agent1Detail}
+
+#### Agent 2: ${strategy.unicorn.aiAgents.agent2}
+**Impact**: ${strategy.unicorn.aiAgents.agent2Impact}
+
+${strategy.unicorn.aiAgents.agent2Detail}
+
+#### Agent 3: ${strategy.unicorn.aiAgents.agent3}
+**Impact**: ${strategy.unicorn.aiAgents.agent3Impact}
+
+${strategy.unicorn.aiAgents.agent3Detail}
+
+---
+
+## 📝 Notes
+
+Ce document a été généré automatiquement par **cbrain**, propulsé par **Mistral AI**.
+
+Pour plus d'informations, visitez [cbrain](https://cbrain-stategy.netlify.app)
+`
 }

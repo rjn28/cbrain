@@ -5,12 +5,12 @@
 import React, { useState } from "react"
 import { Check } from "lucide-react"
 import Image from "next/image"
-import type { MistralStrategyData } from "@/types/strategy"
-import { generateMarkdown, downloadMarkdown, sanitizeFilename } from "@/lib/markdown-exporter"
+import type { ComprehensiveStrategy } from "@/types/strategy-v2"
+import { generateMarkdownV2, downloadMarkdown, sanitizeFilename } from "@/lib/markdown-exporter"
 
 interface ExportButtonProps {
   isVisible: boolean
-  strategyData?: MistralStrategyData
+  strategyData?: ComprehensiveStrategy
 }
 
 export function ExportButton({ isVisible, strategyData }: ExportButtonProps) {
@@ -19,8 +19,8 @@ export function ExportButton({ isVisible, strategyData }: ExportButtonProps) {
   const handleExport = () => {
     if (!strategyData) return
 
-    const markdown = generateMarkdown(strategyData)
-    const filename = sanitizeFilename(strategyData.titreProjet)
+    const markdown = generateMarkdownV2(strategyData)
+    const filename = sanitizeFilename(strategyData.projectName)
     downloadMarkdown(markdown, filename)
 
     // Animation de confirmation

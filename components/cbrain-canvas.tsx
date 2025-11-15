@@ -20,8 +20,9 @@ import {
 } from "@xyflow/react"
 import "@xyflow/react/dist/style.css"
 
-import { createNodesFromMistral, createEdgesFromMistral } from "@/lib/mistral-strategy-parser"
-import type { MistralStrategyData } from "@/types/strategy"
+import { createNodesFromMistralV2, createEdgesFromMistralV2 } from "@/lib/mistral-strategy-parser-v2"
+import { createSkeletonNodes, createSkeletonEdges } from "@/lib/skeleton-tree"
+import type { ComprehensiveStrategy } from "@/types/strategy-v2"
 import { MAIN_NODE_IDS, DEFAULT_VIEWPORT, ZOOM_LIMITS } from "@/config/nodes"
 
 import { HomeHeader } from "./home/HomeHeader"
@@ -32,7 +33,7 @@ import { DetailPanel } from "./detail-panel"
 
 interface CbrainCanvasProps {
   onGenerate?: (idea: string) => void
-  mistralStrategyData?: MistralStrategyData
+  mistralStrategyData?: ComprehensiveStrategy
 }
 
 export function CbrainCanvas({ onGenerate, mistralStrategyData }: CbrainCanvasProps) {
@@ -49,6 +50,14 @@ export function CbrainCanvas({ onGenerate, mistralStrategyData }: CbrainCanvasPr
   const handleSubmit = async (newIdea: string) => {
     setIdea(newIdea)
     setIsGenerating(true)
+    setShowWorkflow(true)
+    
+    // Afficher l'arbre skeleton immédiatement
+    const skeletonNodes = createSkeletonNodes()
+    const skeletonEdges = createSkeletonEdges()
+    setNodes(skeletonNodes)
+    setEdges(skeletonEdges)
+    
     await onGenerate?.(newIdea)
   }
 
@@ -79,8 +88,8 @@ export function CbrainCanvas({ onGenerate, mistralStrategyData }: CbrainCanvasPr
     if (!mistralStrategyData) return
 
     setShowWorkflow(true)
-    const strategyNodes = createNodesFromMistral(mistralStrategyData)
-    const strategyEdges = createEdgesFromMistral()
+    const strategyNodes = createNodesFromMistralV2(mistralStrategyData)
+    const strategyEdges = createEdgesFromMistralV2()
 
     // Importer la séquence d'animation
     // eslint-disable-next-line @typescript-eslint/no-require-imports
