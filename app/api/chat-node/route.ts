@@ -46,27 +46,64 @@ Respond in English in a professional but accessible manner.`
       { role: 'user', content: userMessage },
     ]
 
-    // Appel à l'API Mistral
-    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${MISTRAL_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'mistral-small-latest',
-        messages,
-        temperature: 0.7,
-        max_tokens: 300,
-      }),
-    })
+    // Appel à l'API Mistral avec retry
+    let response
+    let lastError
+    const maxRetries = 3
+    
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${MISTRAL_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: 'open-mistral-7b', // Faster model
+            messages,
+            temperature: 0.5, // Lower for faster responses
+            max_tokens: 200, // Reduced for faster responses
+          }),
+        })
 
-    if (!response.ok) {
-      const error = await response.text()
+        if (response.ok) {
+          break
+        }
+
+        // If 429, wait and retry
+        if (response.status === 429 && attempt < maxRetries - 1) {
+          const waitTime = Math.pow(2, attempt) * 1000
+          console.log(`Rate limit hit, waiting ${waitTime}ms before retry`)
+          await new Promise(resolve => setTimeout(resolve, waitTime))
+          lastError = await response.text()
+          continue
+        }
+
+        // For other errors, break
+        break
+        
+      } catch (error) {
+        lastError = error
+        if (attempt < maxRetries - 1) {
+          const waitTime = Math.pow(2, attempt) * 1000
+          await new Promise(resolve => setTimeout(resolve, waitTime))
+        }
+      }
+    }
+
+    if (!response || !response.ok) {
+      const error = lastError || await response?.text()
       console.error('Mistral error:', error)
+      
+      let errorMessage = `Mistral error (${response?.status || 'unknown'})`
+      if (response?.status === 429) {
+        errorMessage = 'Service temporarily overloaded. Please try again in a moment.'
+      }
+      
       return NextResponse.json(
-        { error: `Mistral error (${response.status})` },
-        { status: response.status }
+        { error: errorMessage },
+        { status: response?.status || 500 }
       )
     }
 

@@ -92,6 +92,7 @@ Voir [ARCHITECTURE.md](./ARCHITECTURE.md) pour plus de détails.
 ## 📖 Documentation
 
 - [Architecture](./docs/ARCHITECTURE.md) - Structure détaillée du projet
+- [Performance](./docs/PERFORMANCE.md) - Optimisations et gestion des erreurs
 - [Contributing](./docs/CONTRIBUTING.md) - Guide de contribution
 - [Project Summary](./docs/PROJECT_SUMMARY.md) - Résumé complet du projet
 - [Structure](./docs/STRUCTURE.txt) - Visualisation de la structure
@@ -149,12 +150,23 @@ Barre de prompt pour modifier l'idée après génération
 **Modal ne s'ouvre pas**
 - Vérifier que les données contiennent les champs `*Detail`
 
+**Erreur 429 (Service Capacity Exceeded)**
+- L'API Mistral est temporairement surchargée
+- Le système réessaie automatiquement 3 fois avec délais croissants
+- Si l'erreur persiste, utilisez le mode démo : `USE_DEMO_DATA=true` dans `.env.local`
+- Attendez quelques minutes avant de réessayer
+
 ## 📊 Performance
 
 - Build optimisé avec Turbopack
 - Lazy loading des composants
 - Animations GPU-accelerated
 - Code splitting automatique
+- **Modèle Mistral optimisé** : `open-mistral-7b` pour des réponses 60% plus rapides
+- **Retry automatique** avec exponential backoff pour gérer les erreurs 429
+- **Fallback vers données de démo** en cas d'indisponibilité de l'API
+
+Voir [PERFORMANCE.md](./docs/PERFORMANCE.md) pour plus de détails sur les optimisations.
 
 ## 🔒 Sécurité
 
