@@ -3,19 +3,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #ffffff;
+  --color-foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color-background: #0a0a0a;
+    --color-foreground: #ededed;
   }
 }
 
@@ -23,4 +20,59 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Animations pour cbrain */
+@keyframes nodeAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(-20px);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes edgeAppear {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  }
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Styles pour React Flow */
+.react-flow__node {
+  animation: nodeAppear 0.5s ease-out;
+}
+
+.react-flow__edge {
+  animation: edgeAppear 0.6s ease-out;
+}
+
+/* Forcer le texte noir dans tous les nodes React Flow */
+.react-flow__node-default,
+.react-flow__node-input,
+.react-flow__node-output {
+  color: #1f2937 !important;
+}
+
+.react-flow__node div {
+  color: inherit;
 }

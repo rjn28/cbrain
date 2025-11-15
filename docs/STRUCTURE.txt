@@ -1,0 +1,96 @@
+📁 cbrain-rebuild/
+│
+├── 📂 app/                                    # Pages Next.js (App Router)
+│   ├── 📂 api/
+│   │   └── 📂 generate-strategy/
+│   │       └── 📄 route.ts                    # API Mistral AI
+│   ├── 📂 cbrain/
+│   │   └── 📄 page.tsx                        # Page principale
+│   ├── 📄 layout.tsx                          # Layout global
+│   ├── 📄 page.tsx                            # Redirection → /cbrain
+│   └── 📄 globals.css                         # Styles globaux
+│
+├── 📂 components/                             # Composants React
+│   ├── 📂 home/                               # Page d'accueil
+│   │   ├── 📄 HomeHeader.tsx                  # Header avec fond animé
+│   │   ├── 📄 IntegrationIcons.tsx            # Icônes partenaires
+│   │   └── 📄 SearchBar.tsx                   # Barre de recherche
+│   ├── 📂 workflow/                           # Workflow
+│   │   ├── 📄 FloatingPromptBar.tsx           # Barre prompt flottante
+│   │   └── 📄 LoadingOverlay.tsx              # Overlay chargement
+│   ├── 📄 cbrain-canvas.tsx                   # Canvas principal (orchestrateur)
+│   └── 📄 detail-panel.tsx                    # Modal de détails
+│
+├── 📂 config/                                 # Configuration
+│   ├── 📄 animation.ts                        # Config animations (3.2s)
+│   ├── 📄 integrations.ts                     # Liste partenaires
+│   └── 📄 nodes.ts                            # Config nœuds React Flow
+│
+├── 📂 lib/                                    # Utilitaires
+│   └── 📄 mistral-strategy-parser.ts          # Parser Mistral → React Flow
+│
+├── 📂 types/                                  # Types TypeScript
+│   └── 📄 strategy.ts                         # MistralStrategyData
+│
+├── 📂 public/                                 # Assets statiques
+│   ├── 🖼️ logoqdrant.svg
+│   ├── 🖼️ logofal.svg
+│   └── 🖼️ favicon.ico
+│
+├── 📂 docs/                                   # Documentation
+│   ├── 📄 README.md                           # Index documentation
+│   ├── 📄 ARCHITECTURE.md                     # Architecture détaillée
+│   ├── 📄 CONTRIBUTING.md                     # Guide contribution
+│   ├── 📄 PROJECT_SUMMARY.md                  # Résumé du projet
+│   └── 📄 STRUCTURE.txt                       # Ce fichier
+│
+├── 📄 README.md                               # Documentation principale
+├── 📄 ENV_SETUP.md                            # Variables d'environnement
+├── 📄 package.json                            # Dépendances
+├── 📄 tsconfig.json                           # Config TypeScript
+├── 📄 tailwind.config.ts                      # Config Tailwind
+├── 📄 next.config.ts                          # Config Next.js
+├── 📄 netlify.toml                            # Config Netlify
+└── 📄 .env.local                              # Variables d'environnement
+
+═══════════════════════════════════════════════════════════════
+
+📊 STATISTIQUES
+
+Total fichiers TypeScript : 17
+- Pages : 4
+- Composants : 8
+- Config : 3
+- Lib : 1
+- Types : 1
+
+Lignes de code : ~1500 (estimation)
+Composants réutilisables : 8
+Fichiers de documentation : 5 (dans docs/)
+
+═══════════════════════════════════════════════════════════════
+
+🎯 POINTS CLÉS
+
+✅ Séparation claire des responsabilités
+✅ Composants modulaires et réutilisables
+✅ Configuration centralisée
+✅ Types TypeScript stricts
+✅ Documentation complète
+✅ Code maintenable et scalable
+
+═══════════════════════════════════════════════════════════════
+
+🔄 FLUX DE DONNÉES
+
+User Input → SearchBar → CbrainCanvas → API Route → Mistral AI
+                                ↓
+                        Parser (lib/)
+                                ↓
+                        React Flow Nodes
+                                ↓
+                        Animation (config/)
+                                ↓
+                        Display + DetailPanel
+
+═══════════════════════════════════════════════════════════════

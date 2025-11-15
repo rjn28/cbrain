@@ -1,0 +1,20 @@
+# Build outputs
+.next/
+.netlify/
+out/
+build/
+dist/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+
+# Environment files
+.env*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db

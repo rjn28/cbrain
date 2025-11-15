@@ -1,36 +1,183 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 cbrain - Générateur de Stratégie IA
 
-## Getting Started
+Application web interactive qui transforme n'importe quelle idée en stratégie complète visualisée sous forme d'arbre animé, propulsée par Mistral AI et React Flow.
 
-First, run the development server:
+## ✨ Fonctionnalités
+
+- 🎯 **Génération automatique** de stratégie complète via Mistral AI
+- 🌳 **Visualisation interactive** avec React Flow
+- 🎨 **Animations fluides** pour l'apparition progressive des nœuds
+- 📱 **Design responsive** et moderne
+- 💡 **Détails approfondis** au clic sur chaque élément
+- ⚡ **Performance optimisée** avec Next.js 16
+
+## 🚀 Démarrage rapide
+
+### Prérequis
+- Node.js 18+
+- npm ou yarn
+- Clé API Mistral AI
+
+### Installation
+
+```bash
+# Cloner le projet
+git clone <repo-url>
+cd cbrain-rebuild
+
+# Installer les dépendances
+npm install
+
+# Configurer les variables d'environnement
+cp .env.example .env.local
+# Éditer .env.local et ajouter votre MISTRAL_API_KEY
+```
+
+### Développement
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+### Déploiement
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Avec Netlify CLI
+netlify deploy --prod
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Structure du projet
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+cbrain-rebuild/
+├── app/                    # Pages Next.js
+│   ├── api/               # API routes
+│   └── cbrain/            # Page principale
+├── components/            # Composants React
+│   ├── home/             # Composants page d'accueil
+│   └── workflow/         # Composants workflow
+├── config/               # Configuration
+├── lib/                  # Utilitaires
+├── types/                # Types TypeScript
+└── public/               # Assets statiques
+```
 
-## Deploy on Vercel
+Voir [ARCHITECTURE.md](./ARCHITECTURE.md) pour plus de détails.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Stack technique
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework** : Next.js 16 (App Router)
+- **UI** : React 18 + Tailwind CSS
+- **Visualisation** : React Flow
+- **IA** : Mistral AI
+- **Langage** : TypeScript
+- **Déploiement** : Netlify
+
+## 📖 Documentation
+
+- [Architecture](./docs/ARCHITECTURE.md) - Structure détaillée du projet
+- [Contributing](./docs/CONTRIBUTING.md) - Guide de contribution
+- [Project Summary](./docs/PROJECT_SUMMARY.md) - Résumé complet du projet
+- [Structure](./docs/STRUCTURE.txt) - Visualisation de la structure
+- [ENV Setup](./ENV_SETUP.md) - Configuration des variables d'environnement
+
+## 🎯 Workflow utilisateur
+
+1. L'utilisateur entre son idée dans la barre de recherche
+2. Mistral AI génère une stratégie complète (persona, produit, stack, planning, agents IA)
+3. L'arbre stratégique s'anime progressivement
+4. L'utilisateur peut cliquer sur chaque nœud pour voir les détails
+5. Il peut modifier son idée et régénérer
+
+## 🧩 Composants principaux
+
+### CbrainCanvas
+Composant racine qui orchestre le workflow complet
+
+### HomeHeader
+Page d'accueil avec fond animé et barre de recherche
+
+### DetailPanel
+Modal flottante affichant les détails de chaque élément
+
+### FloatingPromptBar
+Barre de prompt pour modifier l'idée après génération
+
+## 🎨 Personnalisation
+
+### Ajouter une intégration
+Éditer `config/integrations.ts`
+
+### Modifier l'animation
+Éditer `config/animation.ts`
+
+### Changer les couleurs
+Éditer `components/detail-panel.tsx` (fonction `getColorForTitle`)
+
+## 🐛 Debugging
+
+### Logs
+- Console navigateur : Erreurs React
+- Network tab : Requêtes API
+- Netlify logs : Erreurs production
+
+### Problèmes courants
+
+**L'arbre ne s'affiche pas**
+- Vérifier la clé API Mistral
+- Vérifier la structure des données retournées
+
+**Animation saccadée**
+- Réduire le nombre d'étapes dans `config/animation.ts`
+
+**Modal ne s'ouvre pas**
+- Vérifier que les données contiennent les champs `*Detail`
+
+## 📊 Performance
+
+- Build optimisé avec Turbopack
+- Lazy loading des composants
+- Animations GPU-accelerated
+- Code splitting automatique
+
+## 🔒 Sécurité
+
+- Clé API Mistral côté serveur uniquement
+- Validation des entrées utilisateur
+- Rate limiting sur l'API
+
+## 📝 Licence
+
+Projet personnel - Tous droits réservés
+
+## 👤 Auteur
+
+Roch Junior NICOLAS
+
+## 🙏 Remerciements
+
+- Mistral AI pour l'API
+- React Flow pour la visualisation
+- Netlify pour l'hébergement
+- Partenaires du hackathon : Fal.ai, ElevenLabs, Qdrant, N8n, Lovable
+
+## 📞 Support
+
+Pour toute question ou problème :
+- Ouvrir une issue sur GitHub
+- Consulter la documentation
+- Vérifier les logs Netlify
+
+---
+
+**Version** : 1.0.0  
+**Dernière mise à jour** : Novembre 2024  
+**Statut** : ✅ En production
