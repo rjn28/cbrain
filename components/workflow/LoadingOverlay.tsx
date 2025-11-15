@@ -8,9 +8,9 @@ export function LoadingOverlay() {
       <div className="text-center space-y-4">
         <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
         <p className="text-lg font-semibold text-gray-900">
-          Génération de votre stratégie...
+          Generating your strategy...
         </p>
-        <p className="text-sm text-gray-600">Analyse en cours avec Mistral AI</p>
+        <p className="text-sm text-gray-600">Analysis in progress with Mistral AI</p>
       </div>
     </div>
   )

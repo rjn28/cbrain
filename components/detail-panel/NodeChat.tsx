@@ -59,7 +59,7 @@ export function NodeChat({ nodeTitle, nodeContent }: NodeChatProps) {
       console.error("Erreur:", error)
       const errorMessage: Message = {
         role: "assistant",
-        content: "Désolé, une erreur s'est produite. Réessayez.",
+        content: "Sorry, an error occurred. Please try again.",
       }
       setMessages((prev) => [...prev, errorMessage])
     } finally {
@@ -88,7 +88,7 @@ export function NodeChat({ nodeTitle, nodeContent }: NodeChatProps) {
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 max-h-[300px]">
         {messages.length === 0 ? (
           <div className="text-center text-gray-400 text-sm py-8">
-            💬 Posez une question pour affiner cet élément avec Mistral AI
+            💬 Ask a question to refine this element with Mistral AI
           </div>
         ) : (
           messages.map((message, index) => (
@@ -115,7 +115,7 @@ export function NodeChat({ nodeTitle, nodeContent }: NodeChatProps) {
                           ? "bg-green-100 text-green-600"
                           : "text-gray-400 hover:text-green-600 hover:bg-green-50"
                       }`}
-                      title="Bonne réponse"
+                      title="Good answer"
                     >
                       <ThumbsUp className="w-3.5 h-3.5" />
                     </button>
@@ -126,7 +126,7 @@ export function NodeChat({ nodeTitle, nodeContent }: NodeChatProps) {
                           ? "bg-red-100 text-red-600"
                           : "text-gray-400 hover:text-red-600 hover:bg-red-50"
                       }`}
-                      title="Mauvaise réponse"
+                      title="Bad answer"
                     >
                       <ThumbsDown className="w-3.5 h-3.5" />
                     </button>
@@ -140,7 +140,7 @@ export function NodeChat({ nodeTitle, nodeContent }: NodeChatProps) {
           <div className="flex justify-start">
             <div className="bg-gray-100 rounded-lg px-4 py-2 flex items-center gap-2">
               <Loader2 className="w-4 h-4 animate-spin text-gray-600" />
-              <span className="text-sm text-gray-600">Mistral réfléchit...</span>
+              <span className="text-sm text-gray-600">Mistral is thinking...</span>
             </div>
           </div>
         )}
@@ -154,7 +154,7 @@ export function NodeChat({ nodeTitle, nodeContent }: NodeChatProps) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Posez une question ou demandez des améliorations..."
+            placeholder="Ask a question or request improvements..."
             rows={2}
             className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             disabled={isLoading}
@@ -163,13 +163,13 @@ export function NodeChat({ nodeTitle, nodeContent }: NodeChatProps) {
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
             className="shrink-0 p-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
-            title="Envoyer"
+            title="Send"
           >
             <Send className="w-4 h-4" />
           </button>
         </div>
         <p className="text-xs text-gray-400 mt-2">
-          Appuyez sur Entrée pour envoyer, Shift+Entrée pour une nouvelle ligne
+          Press Enter to send, Shift+Enter for new line
         </p>
       </div>
     </div>

@@ -32,7 +32,7 @@ export function FloatingPromptBar({ isVisible, initialIdea, onSubmit }: Floating
           <textarea
             value={idea}
             onChange={(e) => setIdea(e.target.value)}
-            placeholder="Modifier votre idée..."
+            placeholder="Modify your idea..."
             rows={2}
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement
@@ -46,7 +46,7 @@ export function FloatingPromptBar({ isVisible, initialIdea, onSubmit }: Floating
             className="absolute right-2 top-2 px-4 py-2.5 flex items-center justify-center bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm rounded-lg transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40 whitespace-nowrap"
             disabled={!idea.trim()}
           >
-            <span className="mr-1.5">Régénérer</span>
+            <span className="mr-1.5">Regenerate</span>
             <ArrowUp className="w-4 h-4" />
           </button>
         </form>

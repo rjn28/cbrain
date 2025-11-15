@@ -49,9 +49,9 @@ export function ExportButton({ isVisible, strategyData }: ExportButtonProps) {
           transition-all duration-300
           ${isExported ? "bg-green-50 border-green-500" : ""}
         `}
-        title="Exporter la stratégie vers Lovable"
+        title="Export strategy to Lovable"
       >
-        {/* Logo Lovable ou Check */}
+        {/* Lovable Logo or Check */}
         <div className={`
           w-5 h-5 flex items-center justify-center
           transition-all duration-300
@@ -69,7 +69,7 @@ export function ExportButton({ isVisible, strategyData }: ExportButtonProps) {
           )}
         </div>
 
-        {/* Texte */}
+        {/* Text */}
         <span className={`
           text-sm font-semibold
           transition-all duration-300

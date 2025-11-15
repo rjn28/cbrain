@@ -9,7 +9,7 @@ export default function CbrainPage() {
   const [error, setError] = useState<string | undefined>(undefined)
 
   const handleGenerate = async (idea: string) => {
-    console.log("Génération pour:", idea)
+    console.log("Generating for:", idea)
     setError(undefined)
     
     try {
@@ -24,16 +24,16 @@ export default function CbrainPage() {
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.error || 'Erreur lors de la génération')
+        throw new Error(errorData.error || 'Generation error')
       }
 
       const data = await response.json()
-      console.log("Stratégie générée:", data)
+      console.log("Strategy generated:", data)
       setStrategyData(data)
       
     } catch (err) {
-      console.error("Erreur:", err)
-      setError(err instanceof Error ? err.message : 'Erreur inconnue')
+      console.error("Error:", err)
+      setError(err instanceof Error ? err.message : 'Unknown error')
       
       // En cas d'erreur, utiliser des données de démonstration
       setStrategyData({
@@ -89,9 +89,9 @@ export default function CbrainPage() {
     <>
       {error && (
         <div className="fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded z-50">
-          <p className="font-bold">Erreur</p>
+          <p className="font-bold">Error</p>
           <p className="text-sm">{error}</p>
-          <p className="text-xs mt-1">Utilisation des données de démonstration</p>
+          <p className="text-xs mt-1">Using demo data</p>
         </div>
       )}
       <CbrainCanvas onGenerate={handleGenerate} mistralStrategyData={strategyData} />

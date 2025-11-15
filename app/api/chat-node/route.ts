@@ -12,32 +12,32 @@ export async function POST(request: NextRequest) {
 
     if (!userMessage || !nodeTitle) {
       return NextResponse.json(
-        { error: 'Message et titre du nœud requis' },
+        { error: 'Message and node title required' },
         { status: 400 }
       )
     }
 
     if (!MISTRAL_API_KEY) {
       return NextResponse.json(
-        { error: 'Clé API Mistral manquante' },
+        { error: 'Mistral API key missing' },
         { status: 500 }
       )
     }
 
-    // Construire le contexte pour Mistral
-    const systemPrompt = `Tu es un expert en stratégie business qui aide à affiner et améliorer des éléments de stratégie.
+    // Build context for Mistral
+    const systemPrompt = `You are a business strategy expert who helps refine and improve strategy elements.
 
-Contexte actuel :
-- Élément : ${nodeTitle}
-- Contenu actuel : ${nodeContent}
+Current context:
+- Element: ${nodeTitle}
+- Current content: ${nodeContent}
 
-Ta mission :
-- Répondre de manière concise et actionnable (2-3 phrases max)
-- Proposer des améliorations concrètes
-- Poser des questions pertinentes pour affiner la stratégie
-- Être constructif et encourageant
+Your mission:
+- Respond concisely and actionably (2-3 sentences max)
+- Propose concrete improvements
+- Ask relevant questions to refine the strategy
+- Be constructive and encouraging
 
-Réponds en français de manière professionnelle mais accessible.`
+Respond in English in a professional but accessible manner.`
 
     // Construire l'historique de conversation
     const messages = [
@@ -63,9 +63,9 @@ Réponds en français de manière professionnelle mais accessible.`
 
     if (!response.ok) {
       const error = await response.text()
-      console.error('Erreur Mistral:', error)
+      console.error('Mistral error:', error)
       return NextResponse.json(
-        { error: `Erreur Mistral (${response.status})` },
+        { error: `Mistral error (${response.status})` },
         { status: response.status }
       )
     }
@@ -75,7 +75,7 @@ Réponds en français de manière professionnelle mais accessible.`
 
     if (!assistantMessage) {
       return NextResponse.json(
-        { error: 'Pas de réponse de Mistral' },
+        { error: 'No response from Mistral' },
         { status: 500 }
       )
     }
@@ -83,9 +83,9 @@ Réponds en français de manière professionnelle mais accessible.`
     return NextResponse.json({ message: assistantMessage })
 
   } catch (error) {
-    console.error('Erreur serveur:', error)
+    console.error('Server error:', error)
     return NextResponse.json(
-      { error: 'Erreur interne du serveur' },
+      { error: 'Internal server error' },
       { status: 500 }
     )
   }

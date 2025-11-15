@@ -49,7 +49,7 @@ export function HomeHeader({ isVisible, onSubmit }: HomeHeaderProps) {
         <div className="text-center space-y-3">
           <h1 className="text-6xl font-bold text-gray-900">cbrain</h1>
           <p className="text-xl text-gray-600">
-            Transformez votre idée en stratégie complète
+            Transform your idea into a complete strategy
           </p>
         </div>
 
