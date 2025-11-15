@@ -13,8 +13,8 @@ export default function CbrainPage() {
     setError(undefined)
     
     try {
-      // Appeler l'API Mistral
-      const response = await fetch('/api/generate-strategy', {
+      // Appeler l'API avec streaming
+      const response = await fetch('/api/generate-strategy-progressive', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,18 +23,72 @@ export default function CbrainPage() {
       })
 
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Generation error')
+        throw new Error('Generation error')
       }
 
-      const data = await response.json()
-      console.log("Strategy generated:", data)
-      setStrategyData(data)
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder()
+
+      if (!reader) {
+        throw new Error('No reader available')
+      }
+
+      // Construire progressivement la stratégie
+      const partialStrategy: any = {}
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value)
+        const lines = chunk.split('\n')
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const jsonStr = line.slice(6)
+            try {
+              const event = JSON.parse(jsonStr)
+              
+              if (event.type === 'summary') {
+                partialStrategy.projectName = event.data.projectName
+                partialStrategy.tagline = event.data.tagline
+                // Mettre à jour immédiatement avec le nom du projet
+                setStrategyData({ ...partialStrategy } as ComprehensiveStrategy)
+              } else if (event.type === 'vision' || event.type === 'solution' || 
+                         event.type === 'model' || event.type === 'growth' || 
+                         event.type === 'unicorn') {
+                partialStrategy[event.type] = event.data
+                // Mettre à jour progressivement
+                setStrategyData({ ...partialStrategy } as ComprehensiveStrategy)
+              } else if (event.type === 'complete') {
+                console.log("Strategy generation complete!")
+              } else if (event.type === 'error') {
+                console.error("Category error:", event)
+              }
+            } catch (parseErr) {
+              console.error("Parse error:", parseErr)
+            }
+          }
+        }
+      }
       
     } catch (err) {
       console.error("Error:", err)
       setError(err instanceof Error ? err.message : 'Unknown error')
-      // L'API retourne déjà des données de démo v2 en cas d'erreur
+      // Fallback vers l'ancienne API en cas d'erreur
+      try {
+        const fallbackResponse = await fetch('/api/generate-strategy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idea }),
+        })
+        if (fallbackResponse.ok) {
+          const fallbackData = await fallbackResponse.json()
+          setStrategyData(fallbackData)
+        }
+      } catch (fallbackErr) {
+        console.error("Fallback also failed:", fallbackErr)
+      }
     }
   }
 

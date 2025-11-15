@@ -11,8 +11,13 @@ import type { ComprehensiveStrategy } from "@/types/strategy-v2"
  * @param strategy - Données de stratégie au format ComprehensiveStrategy
  * @returns Liste des nœuds pour React Flow
  */
-export function createNodesFromMistralV2(strategy: ComprehensiveStrategy): Node[] {
+export function createNodesFromMistralV2(strategy: ComprehensiveStrategy | Partial<ComprehensiveStrategy>): Node[] {
   const nodes: Node[] = []
+
+  // Vérifier si on a au moins le tagline
+  if (!strategy.tagline) {
+    return nodes
+  }
 
   // Node racine - Tagline
   nodes.push({
@@ -85,14 +90,16 @@ export function createNodesFromMistralV2(strategy: ComprehensiveStrategy): Node[
 
   // ===== SQUARE 1: VISION =====
   
-  // Sous-nodes Strategy
-  const strategyNodes = [
-    { id: "vision-vision", label: `🎯 Vision\n${strategy.vision.strategy.vision}`, detail: strategy.vision.strategy.visionDetail, y: 410 },
-    { id: "vision-mission", label: `🚀 Mission\n${strategy.vision.strategy.mission}`, detail: strategy.vision.strategy.missionDetail, y: 540 },
-    { id: "vision-values", label: `💎 Values\n${strategy.vision.strategy.values}`, detail: strategy.vision.strategy.valuesDetail, y: 670 },
-  ]
+  // Vérifier si vision existe
+  if (strategy.vision?.strategy) {
+    // Sous-nodes Strategy
+    const strategyNodes = [
+      { id: "vision-vision", label: `🎯 Vision\n${strategy.vision.strategy.vision}`, detail: strategy.vision.strategy.visionDetail, y: 410 },
+      { id: "vision-mission", label: `🚀 Mission\n${strategy.vision.strategy.mission}`, detail: strategy.vision.strategy.missionDetail, y: 540 },
+      { id: "vision-values", label: `💎 Values\n${strategy.vision.strategy.values}`, detail: strategy.vision.strategy.valuesDetail, y: 670 },
+    ]
 
-  strategyNodes.forEach(node => {
+    strategyNodes.forEach(node => {
     nodes.push({
       id: node.id,
       data: { label: node.label, detail: node.detail },

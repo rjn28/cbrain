@@ -20,7 +20,7 @@ import {
 } from "@xyflow/react"
 import "@xyflow/react/dist/style.css"
 
-import { createNodesFromMistralV2, createEdgesFromMistralV2 } from "@/lib/mistral-strategy-parser-v2"
+import { createNodesProgressively, createEdgesProgressively } from "@/lib/mistral-strategy-parser-progressive"
 import { createSkeletonNodes, createSkeletonEdges } from "@/lib/skeleton-tree"
 import type { ComprehensiveStrategy } from "@/types/strategy-v2"
 import { MAIN_NODE_IDS, DEFAULT_VIEWPORT, ZOOM_LIMITS } from "@/config/nodes"
@@ -82,33 +82,27 @@ export function CbrainCanvas({ onGenerate, mistralStrategyData }: CbrainCanvasPr
   )
 
   /**
-   * Anime l'arbre quand les données Mistral arrivent
+   * Construit l'arbre progressivement quand les données arrivent
    */
   React.useEffect(() => {
     if (!mistralStrategyData) return
 
     setShowWorkflow(true)
-    const strategyNodes = createNodesFromMistralV2(mistralStrategyData)
-    const strategyEdges = createEdgesFromMistralV2()
-
-    // Importer la séquence d'animation
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { createAnimationSequence, ANIMATION_DURATION } = require("@/config/animation")
-    const animationSequence = createAnimationSequence(strategyNodes, strategyEdges)
-
-    // Exécuter l'animation
-    animationSequence.forEach((step: { delay: number; nodes: Node[]; edges: Edge[] }) => {
-      setTimeout(() => {
-        setNodes(step.nodes)
-        setEdges(step.edges)
-      }, step.delay)
-    })
-
-    // Arrêter le loading
-    setTimeout(() => {
+    
+    // Créer les nœuds et edges progressivement
+    const strategyNodes = createNodesProgressively(mistralStrategyData)
+    const strategyEdges = createEdgesProgressively(strategyNodes)
+    
+    // Mettre à jour immédiatement
+    setNodes(strategyNodes)
+    setEdges(strategyEdges)
+    
+    // Arrêter le loading si on a au moins le nom du projet
+    if (mistralStrategyData.projectName) {
       setIsGenerating(false)
-    }, ANIMATION_DURATION)
-  }, [mistralStrategyData, setNodes, setEdges])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mistralStrategyData])
 
   return (
     <div className="relative w-full h-screen bg-linear-to-br from-gray-50 to-gray-100">
