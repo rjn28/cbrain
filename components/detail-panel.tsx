@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { X, Sparkles, User, AlertCircle, Target, Lightbulb, Star, Code, Wrench, Users, Calendar, Bot } from "lucide-react"
+import { X, Sparkles, User, AlertCircle, Target, Lightbulb, Star, Code, Wrench, Users, Calendar, Bot, MessageSquare } from "lucide-react"
+import { NodeChat } from "./detail-panel/NodeChat"
 
 interface DetailPanelProps {
   isOpen: boolean
@@ -53,6 +54,7 @@ function getColorForTitle(title: string) {
 
 export function DetailPanel({ isOpen, onClose, title, detail }: DetailPanelProps) {
   const [isAnimating, setIsAnimating] = useState(false)
+  const [showChat, setShowChat] = useState(false)
   const icon = getIconForTitle(title)
   const colors = getColorForTitle(title)
 
@@ -132,42 +134,59 @@ export function DetailPanel({ isOpen, onClose, title, detail }: DetailPanelProps
 
         {/* Content */}
         <div className="relative max-h-[calc(85vh-200px)] overflow-y-auto px-8 py-8 custom-scrollbar">
-          <div className="space-y-6">
-            {detail.split('\n\n').map((paragraph, index) => (
-              <div key={index} className="group">
-                {/* Paragraph number badge */}
-                <div className="flex items-start gap-4">
-                  <div className={`shrink-0 w-8 h-8 rounded-lg ${colors.bgLight} ${colors.border} border flex items-center justify-center mt-1`}>
-                    <span className={`text-sm font-bold ${colors.text}`}>
-                      {index + 1}
-                    </span>
+          {!showChat ? (
+            <div className="space-y-6">
+              {detail.split('\n\n').map((paragraph, index) => (
+                <div key={index} className="group">
+                  {/* Paragraph number badge */}
+                  <div className="flex items-start gap-4">
+                    <div className={`shrink-0 w-8 h-8 rounded-lg ${colors.bgLight} ${colors.border} border flex items-center justify-center mt-1`}>
+                      <span className={`text-sm font-bold ${colors.text}`}>
+                        {index + 1}
+                      </span>
+                    </div>
+                    
+                    {/* Paragraph content */}
+                    <div className="flex-1">
+                      <p className="text-[15px] text-gray-700 leading-relaxed font-normal text-justify">
+                        {paragraph}
+                      </p>
+                    </div>
                   </div>
-                  
-                  {/* Paragraph content */}
-                  <div className="flex-1">
-                    <p className="text-[15px] text-gray-700 leading-relaxed font-normal text-justify">
-                      {paragraph}
-                    </p>
-                  </div>
+
+                  {/* Separator (except for last paragraph) */}
+                  {index < detail.split('\n\n').length - 1 && (
+                    <div className="mt-6 ml-12 h-px bg-linear-to-r from-gray-200 via-gray-100 to-transparent" />
+                  )}
                 </div>
-
-                {/* Separator (except for last paragraph) */}
-                {index < detail.split('\n\n').length - 1 && (
-                  <div className="mt-6 ml-12 h-px bg-linear-to-r from-gray-200 via-gray-100 to-transparent" />
-                )}
-              </div>
-            ))}
-          </div>
-
+              ))}
+            </div>
+          ) : (
+            <NodeChat nodeTitle={title} nodeContent={detail} />
+          )}
         </div>
 
-        {/* Footer badge */}
-        <div className="px-8 py-4 border-t border-gray-200/50">
-          <div className={`px-4 py-2.5 rounded-xl ${colors.bgLight} ${colors.border} border backdrop-blur-sm flex items-center justify-center`}>
+        {/* Footer avec toggle chat */}
+        <div className="px-8 py-4 border-t border-gray-200/50 flex items-center justify-between gap-4">
+          <div className={`flex-1 px-4 py-2.5 rounded-xl ${colors.bgLight} ${colors.border} border backdrop-blur-sm flex items-center justify-center`}>
             <span className={`text-xs font-semibold ${colors.text}`}>
               Généré par Mistral AI
             </span>
           </div>
+          
+          <button
+            onClick={() => setShowChat(!showChat)}
+            className={`shrink-0 px-4 py-2.5 rounded-xl border-2 transition-all duration-200 flex items-center gap-2 ${
+              showChat
+                ? `${colors.border} bg-linear-to-r ${colors.bg} text-white`
+                : `border-gray-300 bg-white text-gray-700 hover:border-gray-400`
+            }`}
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span className="text-xs font-semibold">
+              {showChat ? "Voir détails" : "Discuter"}
+            </span>
+          </button>
         </div>
       </div>
 
