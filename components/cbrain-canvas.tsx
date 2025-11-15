@@ -27,7 +27,6 @@ import { MAIN_NODE_IDS, DEFAULT_VIEWPORT, ZOOM_LIMITS } from "@/config/nodes"
 
 import { HomeHeader } from "./home/HomeHeader"
 import { FloatingPromptBar } from "./workflow/FloatingPromptBar"
-import { LoadingOverlay } from "./workflow/LoadingOverlay"
 import { ExportButton } from "./workflow/ExportButton"
 import { DetailPanel } from "./detail-panel"
 
@@ -101,8 +100,7 @@ export function CbrainCanvas({ onGenerate, mistralStrategyData }: CbrainCanvasPr
     if (mistralStrategyData.projectName) {
       setIsGenerating(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mistralStrategyData])
+  }, [mistralStrategyData, setNodes, setEdges, setIsGenerating])
 
   return (
     <div className="relative w-full h-screen bg-linear-to-br from-gray-50 to-gray-100">
@@ -152,9 +150,6 @@ export function CbrainCanvas({ onGenerate, mistralStrategyData }: CbrainCanvasPr
         isVisible={showWorkflow && !isGenerating}
         strategyData={mistralStrategyData}
       />
-
-      {/* Overlay de chargement */}
-      {isGenerating && <LoadingOverlay />}
     </div>
   )
 }

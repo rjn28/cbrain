@@ -137,6 +137,31 @@ export interface UnicornSquare {
   }
 }
 
+// Carré 6 : Qdrant Thinking (YC Insights)
+export interface QdrantThinkingSquare {
+  ycInsights: {
+    title: string
+    company1: string
+    company1Detail: string
+    company1Batch: string
+    company2: string
+    company2Detail: string
+    company2Batch: string
+    company3: string
+    company3Detail: string
+    company3Batch: string
+  }
+  learnings: {
+    title: string
+    marketValidation: string
+    marketValidationDetail: string
+    competitiveAdvantage: string
+    competitiveAdvantageDetail: string
+    keyLearnings: string
+    keyLearningsDetail: string
+  }
+}
+
 // Structure complète de la stratégie
 export interface ComprehensiveStrategy {
   projectName: string
@@ -146,4 +171,5 @@ export interface ComprehensiveStrategy {
   model: ModelSquare
   growth: GrowthSquare
   unicorn: UnicornSquare
+  qdrantThinking?: QdrantThinkingSquare  // Optional pour compatibilité
 }

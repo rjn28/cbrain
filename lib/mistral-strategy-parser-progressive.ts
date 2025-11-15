@@ -56,13 +56,14 @@ export function createNodesProgressively(strategy: Partial<ComprehensiveStrategy
     })
   }
 
-  // Nodes principaux - 5 carrés
+  // Nodes principaux - 6 carrés
   const mainNodes = [
     { id: "vision", label: "🎯 Vision\nStrategy & Market", x: 50, color: "#3b82f6", hasData: !!strategy.vision },
     { id: "solution", label: "💡 Solution\nMVP", x: 280, color: "#8b5cf6", hasData: !!strategy.solution },
     { id: "model", label: "💼 Model\nBusiness & Tech", x: 510, color: "#10b981", hasData: !!strategy.model },
     { id: "growth", label: "📈 Growth\nLaunch", x: 740, color: "#f59e0b", hasData: !!strategy.growth },
     { id: "unicorn", label: "🦄 Unicorn\nKPIs & AI", x: 970, color: "#ec4899", hasData: !!strategy.unicorn },
+    { id: "qdrant", label: "🧠 Qdrant Thinking\nYC Insights", x: 1200, color: "#06b6d4", hasData: !!strategy.qdrantThinking },
   ]
 
   mainNodes.forEach(node => {
@@ -338,6 +339,64 @@ export function createNodesProgressively(strategy: Partial<ComprehensiveStrategy
     })
   }
 
+  // ===== SQUARE 6: QDRANT THINKING =====
+  
+  // Qdrant - YC Insights
+  if (strategy.qdrantThinking?.ycInsights) {
+    const ycNodes = [
+      { id: "qdrant-company1", label: `🏢 ${strategy.qdrantThinking.ycInsights.company1}`, detail: `${strategy.qdrantThinking.ycInsights.company1Detail}\n\nBatch: ${strategy.qdrantThinking.ycInsights.company1Batch}`, y: 410 },
+      { id: "qdrant-company2", label: `🏢 ${strategy.qdrantThinking.ycInsights.company2}`, detail: `${strategy.qdrantThinking.ycInsights.company2Detail}\n\nBatch: ${strategy.qdrantThinking.ycInsights.company2Batch}`, y: 540 },
+      { id: "qdrant-company3", label: `🏢 ${strategy.qdrantThinking.ycInsights.company3}`, detail: `${strategy.qdrantThinking.ycInsights.company3Detail}\n\nBatch: ${strategy.qdrantThinking.ycInsights.company3Batch}`, y: 670 },
+    ]
+    ycNodes.forEach(node => {
+      nodes.push({
+        id: node.id,
+        data: { label: node.label, detail: node.detail },
+        position: { x: 1170, y: node.y },
+        style: {
+          background: "white",
+          color: "#1f2937",
+          border: "2px solid #06b6d4",
+          borderRadius: "8px",
+          padding: "14px 18px",
+          fontSize: "13px",
+          minWidth: "180px",
+          textAlign: "center",
+          whiteSpace: "pre-line",
+          cursor: "pointer",
+        },
+      })
+    })
+  }
+
+  // Qdrant - Learnings
+  if (strategy.qdrantThinking?.learnings) {
+    const learningNodes = [
+      { id: "qdrant-validation", label: `✅ ${strategy.qdrantThinking.learnings.marketValidation}`, detail: strategy.qdrantThinking.learnings.marketValidationDetail, y: 800 },
+      { id: "qdrant-advantage", label: `⚡ ${strategy.qdrantThinking.learnings.competitiveAdvantage}`, detail: strategy.qdrantThinking.learnings.competitiveAdvantageDetail, y: 930 },
+      { id: "qdrant-learnings", label: `📚 ${strategy.qdrantThinking.learnings.keyLearnings}`, detail: strategy.qdrantThinking.learnings.keyLearningsDetail, y: 1060 },
+    ]
+    learningNodes.forEach(node => {
+      nodes.push({
+        id: node.id,
+        data: { label: node.label, detail: node.detail },
+        position: { x: 1170, y: node.y },
+        style: {
+          background: "white",
+          color: "#1f2937",
+          border: "2px solid #06b6d4",
+          borderRadius: "8px",
+          padding: "14px 18px",
+          fontSize: "13px",
+          minWidth: "180px",
+          textAlign: "center",
+          whiteSpace: "pre-line",
+          cursor: "pointer",
+        },
+      })
+    })
+  }
+
   return nodes
 }
 
@@ -368,6 +427,7 @@ export function createEdgesProgressively(nodes: Node[]): Edge[] {
   addEdge("e-project-model", "project-name", "model", "#10b981")
   addEdge("e-project-growth", "project-name", "growth", "#f59e0b")
   addEdge("e-project-unicorn", "project-name", "unicorn", "#ec4899")
+  addEdge("e-project-qdrant", "project-name", "qdrant", "#06b6d4")
 
   // Vision
   addEdge("e-vision-vision", "vision", "vision-vision", "#3b82f6")
@@ -407,6 +467,14 @@ export function createEdgesProgressively(nodes: Node[]): Edge[] {
   addEdge("e-unicorn-agent1", "unicorn", "unicorn-agent1", "#ec4899")
   addEdge("e-unicorn-agent2", "unicorn", "unicorn-agent2", "#ec4899")
   addEdge("e-unicorn-agent3", "unicorn", "unicorn-agent3", "#ec4899")
+
+  // Qdrant Thinking
+  addEdge("e-qdrant-company1", "qdrant", "qdrant-company1", "#06b6d4")
+  addEdge("e-qdrant-company2", "qdrant", "qdrant-company2", "#06b6d4")
+  addEdge("e-qdrant-company3", "qdrant", "qdrant-company3", "#06b6d4")
+  addEdge("e-qdrant-validation", "qdrant", "qdrant-validation", "#06b6d4")
+  addEdge("e-qdrant-advantage", "qdrant", "qdrant-advantage", "#06b6d4")
+  addEdge("e-qdrant-learnings", "qdrant", "qdrant-learnings", "#06b6d4")
 
   return edges
 }

@@ -64,9 +64,9 @@ export function DetailPanel({ isOpen, onClose, title, detail }: DetailPanelProps
       const timeoutId = setTimeout(() => setIsAnimating(true), 10)
       return () => clearTimeout(timeoutId)
     }
-    // Animation de sortie immédiate
-    setIsAnimating(false)
-    return undefined
+    // Animation de sortie avec délai pour éviter setState synchrone
+    const timeoutId = setTimeout(() => setIsAnimating(false), 0)
+    return () => clearTimeout(timeoutId)
   }, [isOpen])
 
   const handleClose = () => {

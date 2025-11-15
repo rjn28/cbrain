@@ -442,11 +442,14 @@ ${strategy.unicorn.kpis.acquisitionMetricsDetail}
 
 ${strategy.unicorn.kpis.engagementMetricsDetail}
 
+${strategy.unicorn.kpis.revenueMetrics ? `
 #### Métriques de revenus
 **${strategy.unicorn.kpis.revenueMetrics}**
 
 ${strategy.unicorn.kpis.revenueMetricsDetail}
+` : ''}
 
+${strategy.unicorn.learnings ? `
 ### Apprentissages
 
 #### Hypothèses
@@ -463,6 +466,7 @@ ${strategy.unicorn.learnings.experimentsDetail}
 **${strategy.unicorn.learnings.pivotStrategy}**
 
 ${strategy.unicorn.learnings.pivotStrategyDetail}
+` : ''}
 
 ### Agents IA
 
@@ -480,6 +484,46 @@ ${strategy.unicorn.aiAgents.agent2Detail}
 **Impact**: ${strategy.unicorn.aiAgents.agent3Impact}
 
 ${strategy.unicorn.aiAgents.agent3Detail}
+
+${strategy.qdrantThinking ? `
+---
+
+## 🧠 Qdrant Thinking - YC Insights
+
+### Entreprises YC Similaires
+
+#### ${strategy.qdrantThinking.ycInsights.company1}
+**Batch**: ${strategy.qdrantThinking.ycInsights.company1Batch}
+
+${strategy.qdrantThinking.ycInsights.company1Detail}
+
+#### ${strategy.qdrantThinking.ycInsights.company2}
+**Batch**: ${strategy.qdrantThinking.ycInsights.company2Batch}
+
+${strategy.qdrantThinking.ycInsights.company2Detail}
+
+#### ${strategy.qdrantThinking.ycInsights.company3}
+**Batch**: ${strategy.qdrantThinking.ycInsights.company3Batch}
+
+${strategy.qdrantThinking.ycInsights.company3Detail}
+
+### Learnings Stratégiques
+
+#### Validation Marché
+**${strategy.qdrantThinking.learnings.marketValidation}**
+
+${strategy.qdrantThinking.learnings.marketValidationDetail}
+
+#### Avantage Concurrentiel
+**${strategy.qdrantThinking.learnings.competitiveAdvantage}**
+
+${strategy.qdrantThinking.learnings.competitiveAdvantageDetail}
+
+#### Leçons Clés
+**${strategy.qdrantThinking.learnings.keyLearnings}**
+
+${strategy.qdrantThinking.learnings.keyLearningsDetail}
+` : ''}
 
 ---
 

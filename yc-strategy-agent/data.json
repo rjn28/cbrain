@@ -1,0 +1,63 @@
+Searching for strategic insights about: 'Octolane'...
+
+Found 5 strategic insights:
+
+1. YC-Backed Octolane Raises Seed To Build The Next AI Salesforce
+   URL: https://www.forbes.com/sites/dariashunina/2025/04/14/yc-backed-octolane-raises-seed-to-build-the-next-ai-salesforce/
+   Snippet: Apr 14, 2025 ... What's particularly striking about Octolane's strategy is its deliberately contrarian approach to the market. ... Octolane simply says, "Go ......
+   Query: "Octolane" go-to-market strategy
+
+2. 127 One Chowdhury of Octolane - CRM Talk Podcast
+   URL: https://www.crmtalkpodcast.com/one-chowdhury-octolane/
+   Snippet: Oct 17, 2025 ... Anything you edit on Salesforce will show up on Octolane. So we get like a very small department of a big company and they start using it. And ......
+   Query: "Octolane" go-to-market strategy
+
+3. What is Octolane AI - Octolane documentation
+   URL: https://docs.octolane.com/introduction
+   Snippet: This means the platform doesn't just store customer data but actively predicts and executes actions to move the sales processes. ​. Key Features of Octolane AI....
+   Query: "Octolane" go-to-market strategy
+
+4. Octolane AI (@octolane_ai) / Posts / X
+   URL: https://x.com/octolane_ai?lang=en
+   Snippet: ... move the needle for Octolane: 1. Action List V2: Making it dead simple to ... That conversation alone was worth its weight in gold to develop our strategy to get ......
+   Query: "Octolane" go-to-market strategy
+
+5. CRM Podcasts | Technology Advisors Inc.
+   URL: https://www.techadv.com/podcast
+   Snippet: Steve and Sam are joined by One Chowdhury, founder of the AI-native CRM, Octolane. ... Jen dives into Infor's vertical-specific go-to-market strategy ......
+   Query: "Octolane" go-to-market strategy
+
+
+JSON output:
+[
+  {
+    "title": "YC-Backed Octolane Raises Seed To Build The Next AI Salesforce",
+    "url": "https://www.forbes.com/sites/dariashunina/2025/04/14/yc-backed-octolane-raises-seed-to-build-the-next-ai-salesforce/",
+    "snippet": "Apr 14, 2025 ... What's particularly striking about Octolane's strategy is its deliberately contrarian approach to the market. ... Octolane simply says, \"Go\u00a0...",
+    "query": "\"Octolane\" go-to-market strategy"
+  },
+  {
+    "title": "127 One Chowdhury of Octolane - CRM Talk Podcast",
+    "url": "https://www.crmtalkpodcast.com/one-chowdhury-octolane/",
+    "snippet": "Oct 17, 2025 ... Anything you edit on Salesforce will show up on Octolane. So we get like a very small department of a big company and they start using it. And\u00a0...",
+    "query": "\"Octolane\" go-to-market strategy"
+  },
+  {
+    "title": "What is Octolane AI - Octolane documentation",
+    "url": "https://docs.octolane.com/introduction",
+    "snippet": "This means the platform doesn't just store customer data but actively predicts and executes actions to move the sales processes. \u200b. Key Features of Octolane AI.",
+    "query": "\"Octolane\" go-to-market strategy"
+  },
+  {
+    "title": "Octolane AI (@octolane_ai) / Posts / X",
+    "url": "https://x.com/octolane_ai?lang=en",
+    "snippet": "... move the needle for Octolane: 1. Action List V2: Making it dead simple to ... That conversation alone was worth its weight in gold to develop our strategy to get\u00a0...",
+    "query": "\"Octolane\" go-to-market strategy"
+  },
+  {
+    "title": "CRM Podcasts | Technology Advisors Inc.",
+    "url": "https://www.techadv.com/podcast",
+    "snippet": "Steve and Sam are joined by One Chowdhury, founder of the AI-native CRM, Octolane. ... Jen dives into Infor's vertical-specific go-to-market strategy\u00a0...",
+    "query": "\"Octolane\" go-to-market strategy"
+  }
+]

@@ -7,13 +7,43 @@ export function getProjectSummaryPrompt(idea: string): string {
 
 Startup idea: "${idea}"
 
-Return ONLY valid JSON (no markdown, no code blocks) with this structure:
+CRITICAL: Return ONLY valid JSON with NO markdown formatting (no **, no *, no links). Start directly with { and end with }. Do NOT use markdown in text values.
+
+Structure:
 {
   "projectName": "Short catchy name (2-4 words)",
   "tagline": "One-line description (max 10 words)"
 }
 
-Be creative, concise, and impactful.`
+Be strategic, specific, and future-focused.`
+}
+
+export function getQdrantThinkingPrompt(idea: string, projectName: string): string {
+  return `Find 3 real YC companies similar to this idea: "${idea}". Keep responses VERY SHORT.
+
+CRITICAL: Return ONLY valid JSON. NO markdown. NO special chars. Max 10 words per detail.
+
+{
+  "ycInsights": {
+    "company1": "Real YC Company Name 1",
+    "company1Detail": "One key lesson (max 10 words)",
+    "company1Batch": "S20",
+    "company2": "Real YC Company Name 2",
+    "company2Detail": "One key lesson (max 10 words)",
+    "company2Batch": "W21",
+    "company3": "Real YC Company Name 3",
+    "company3Detail": "One key lesson (max 10 words)",
+    "company3Batch": "S21"
+  },
+  "learnings": {
+    "marketValidation": "Market insight (3-5 words)",
+    "marketValidationDetail": "One sentence (max 10 words)",
+    "competitiveAdvantage": "Advantage (3-5 words)",
+    "competitiveAdvantageDetail": "One sentence (max 10 words)",
+    "keyLearnings": "Main lesson (3-5 words)",
+    "keyLearningsDetail": "One sentence (max 10 words)"
+  }
+}`
 }
 
 export function getVisionPrompt(idea: string, projectName: string): string {
@@ -22,7 +52,9 @@ export function getVisionPrompt(idea: string, projectName: string): string {
 Startup idea: "${idea}"
 Project name: "${projectName}"
 
-Return ONLY valid JSON (no markdown, no code blocks) with this structure:
+CRITICAL: Return ONLY valid JSON with NO markdown formatting (no **, no *, no links). Start directly with { and end with }. Do NOT use markdown in text values.
+
+Structure:
 {
   "strategy": {
     "vision": "Main vision (5-8 words)",
@@ -49,7 +81,9 @@ export function getSolutionPrompt(idea: string, projectName: string): string {
 Startup idea: "${idea}"
 Project name: "${projectName}"
 
-Return ONLY valid JSON (no markdown, no code blocks) with this structure:
+CRITICAL: Return ONLY valid JSON with NO markdown formatting (no **, no *, no links). Start directly with { and end with }. Do NOT use markdown in text values.
+
+Structure:
 {
   "mvp": {
     "concept": "Core concept (5-8 words)",
@@ -72,7 +106,9 @@ export function getModelPrompt(idea: string, projectName: string): string {
 Startup idea: "${idea}"
 Project name: "${projectName}"
 
-Return ONLY valid JSON (no markdown, no code blocks) with this structure:
+CRITICAL: Return ONLY valid JSON with NO markdown formatting (no **, no *, no links). Start directly with { and end with }. Do NOT use markdown in text values.
+
+Structure:
 {
   "businessModel": {
     "revenueStreams": "Revenue model (5-8 words)",
@@ -99,7 +135,9 @@ export function getGrowthPrompt(idea: string, projectName: string): string {
 Startup idea: "${idea}"
 Project name: "${projectName}"
 
-Return ONLY valid JSON (no markdown, no code blocks) with this structure:
+CRITICAL: Return ONLY valid JSON with NO markdown formatting (no **, no *, no links). Start directly with { and end with }. Do NOT use markdown in text values.
+
+Structure:
 {
   "launchTimeline": {
     "phase1": "Phase 1 name (3-5 words)",
@@ -126,7 +164,9 @@ export function getUnicornPrompt(idea: string, projectName: string): string {
 Startup idea: "${idea}"
 Project name: "${projectName}"
 
-Return ONLY valid JSON (no markdown, no code blocks) with this structure:
+CRITICAL: Return ONLY valid JSON with NO markdown formatting (no **, no *, no links). Start directly with { and end with }. Do NOT use markdown in text values.
+
+Structure:
 {
   "kpis": {
     "northStarMetric": "North Star metric (5-8 words)",

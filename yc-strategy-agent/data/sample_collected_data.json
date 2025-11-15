@@ -1,0 +1,108 @@
+{
+  "user_idea": "AI-powered CRM for startups",
+  "companies": [
+    {
+      "name": "item",
+      "description": "The AI-Native CRM that works for you",
+      "url": "https://www.ycombinator.com/companies/item",
+      "industry": "B2B",
+      "similarity_score": 0.9636,
+      "yc_listing": {
+        "yc_url": "https://www.ycombinator.com/companies/item",
+        "name": "item",
+        "description": "The AI-Native CRM that works for you",
+        "founders": [],
+        "batch": "Fall 2025",
+        "tags": ["B2B", "Sales"],
+        "website": "https://www.item.so",
+        "full_description": "item is an AI-native CRM designed to work for you, not against you."
+      },
+      "landing_page": {
+        "website_url": "https://www.item.so",
+        "hero_section": "The AI-Native CRM",
+        "value_proposition": "CRM that works for you, not against you",
+        "headlines": ["The AI-Native CRM", "Built for modern teams"],
+        "features": [],
+        "pricing": "",
+        "main_content": "item is an AI-native CRM designed to help sales teams work more efficiently."
+      },
+      "google_insights": [
+        {
+          "title": "How item is revolutionizing CRM",
+          "url": "https://example.com/item-strategy",
+          "snippet": "item's go-to-market strategy focuses on AI-first approach",
+          "query": "\"item\" go-to-market strategy"
+        }
+      ]
+    },
+    {
+      "name": "Octolane AI",
+      "description": "Self-Driving AI CRM",
+      "url": "https://www.ycombinator.com/companies/octolane-ai",
+      "industry": "B2B",
+      "similarity_score": 0.9469,
+      "yc_listing": {
+        "yc_url": "https://www.ycombinator.com/companies/octolane-ai",
+        "name": "Octolane AI",
+        "description": "Self-Driving AI CRM",
+        "founders": [],
+        "batch": "Winter 2024",
+        "tags": ["B2B", "Sales"],
+        "website": "https://www.octolane.com",
+        "full_description": "Octolane is a self-driving AI CRM that writes follow-ups and updates pipelines automatically."
+      },
+      "landing_page": {
+        "website_url": "https://www.octolane.com",
+        "hero_section": "Self Driving AI CRM",
+        "value_proposition": "Octolane writes your follow-ups, updates your pipeline, and tells you what to do next — before you even log in.",
+        "headlines": ["Self Driving AI CRM"],
+        "features": [],
+        "pricing": "",
+        "main_content": "Octolane is the world's first Self-Driving AI CRM. Not a System of Record. A System of Action."
+      },
+      "google_insights": [
+        {
+          "title": "YC-Backed Octolane Raises Seed To Build The Next AI Salesforce",
+          "url": "https://www.forbes.com/sites/dariashunina/2025/04/14/yc-backed-octolane-raises-seed-to-build-the-next-ai-salesforce/",
+          "snippet": "What's particularly striking about Octolane's strategy is its deliberately contrarian approach to the market.",
+          "query": "\"Octolane\" go-to-market strategy"
+        }
+      ]
+    },
+    {
+      "name": "BIK",
+      "description": "Agentic AI CRM for ecommerce",
+      "url": "https://www.ycombinator.com/companies/bik",
+      "industry": "B2B",
+      "similarity_score": 0.9467,
+      "yc_listing": {
+        "yc_url": "https://www.ycombinator.com/companies/bik",
+        "name": "BIK",
+        "description": "Agentic AI CRM for ecommerce",
+        "founders": [],
+        "batch": "Summer 2020",
+        "tags": ["B2B", "Retail"],
+        "website": "https://www.bik.ai",
+        "full_description": "BIK is an agentic AI CRM specifically designed for ecommerce businesses."
+      },
+      "landing_page": {
+        "website_url": "https://www.bik.ai",
+        "hero_section": "Agentic AI CRM for ecommerce",
+        "value_proposition": "AI-powered CRM designed specifically for ecommerce",
+        "headlines": ["Agentic AI CRM"],
+        "features": [],
+        "pricing": "",
+        "main_content": "BIK provides agentic AI capabilities for ecommerce CRM."
+      },
+      "google_insights": [
+        {
+          "title": "BIK's approach to ecommerce CRM",
+          "url": "https://example.com/bik-strategy",
+          "snippet": "BIK focuses on ecommerce-specific AI CRM solutions",
+          "query": "\"BIK\" go-to-market strategy"
+        }
+      ]
+    }
+  ]
+}
+

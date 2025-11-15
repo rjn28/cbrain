@@ -34,6 +34,7 @@ export default function CbrainPage() {
       }
 
       // Construire progressivement la stratégie
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const partialStrategy: any = {}
 
       while (true) {
@@ -56,14 +57,17 @@ export default function CbrainPage() {
                 setStrategyData({ ...partialStrategy } as ComprehensiveStrategy)
               } else if (event.type === 'vision' || event.type === 'solution' || 
                          event.type === 'model' || event.type === 'growth' || 
-                         event.type === 'unicorn') {
+                         event.type === 'unicorn' || event.type === 'qdrantThinking') {
                 partialStrategy[event.type] = event.data
                 // Mettre à jour progressivement
                 setStrategyData({ ...partialStrategy } as ComprehensiveStrategy)
               } else if (event.type === 'complete') {
-                console.log("Strategy generation complete!")
+                console.log("✓ Strategy generation complete!")
               } else if (event.type === 'error') {
-                console.error("Category error:", event)
+                console.error(`✗ Error in category "${event.category}":`, event.error)
+                if (event.details) {
+                  console.error('Error details:', event.details)
+                }
               }
             } catch (parseErr) {
               console.error("Parse error:", parseErr)

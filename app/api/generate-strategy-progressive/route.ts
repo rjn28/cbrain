@@ -6,6 +6,7 @@ import {
   getModelPrompt,
   getGrowthPrompt,
   getUnicornPrompt,
+  getQdrantThinkingPrompt,
 } from "@/lib/prompts/category-prompts"
 
 const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY
@@ -14,6 +15,7 @@ const MISTRAL_MODEL = "mistral-large-latest"
 /**
  * Appelle Mistral AI avec un prompt donné
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function callMistral(prompt: string): Promise<any> {
   const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
     method: "POST",
@@ -25,7 +27,7 @@ async function callMistral(prompt: string): Promise<any> {
       model: MISTRAL_MODEL,
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
-      max_tokens: 4000,
+      max_tokens: 8000,
     }),
   })
 
@@ -42,16 +44,33 @@ async function callMistral(prompt: string): Promise<any> {
 
   // Nettoyer et parser le JSON
   let cleanContent = content
-    .replace(/```json\n?/g, "")
+    .replace(/```json\n?/gi, "")  // Case insensitive
     .replace(/```\n?/g, "")
+    .replace(/^```/g, "")  // Au début
+    .replace(/```$/g, "")  // À la fin
     .trim()
+
+  // Supprimer les caractères markdown dans les valeurs JSON
+  cleanContent = cleanContent.replace(/\*\*/g, "")
+  cleanContent = cleanContent.replace(/\*/g, "")
+  cleanContent = cleanContent.replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1") // Liens markdown
 
   // Corriger les erreurs JSON courantes
   cleanContent = cleanContent.replace(/"\s*\n\s*"/g, '",\n"')
   cleanContent = cleanContent.replace(/}\s*\n\s*"/g, '},\n"')
   cleanContent = cleanContent.replace(/\]\s*\n\s*"/g, '],\n"')
 
-  return JSON.parse(cleanContent)
+  try {
+    return JSON.parse(cleanContent)
+  } catch (parseError) {
+    console.error("JSON Parse Error:")
+    console.error("Raw content (first 1000 chars):", content.substring(0, 1000))
+    console.error("Cleaned content (first 1000 chars):", cleanContent.substring(0, 1000))
+    console.error("Full cleaned content length:", cleanContent.length)
+    // Afficher les derniers caractères pour voir si le JSON est complet
+    console.error("Last 200 chars:", cleanContent.substring(Math.max(0, cleanContent.length - 200)))
+    throw new Error(`Failed to parse JSON: ${parseError instanceof Error ? parseError.message : String(parseError)}`)
+  }
 }
 
 /**
@@ -92,20 +111,31 @@ export async function POST(request: NextRequest) {
           { name: "model", prompt: getModelPrompt(idea, projectName) },
           { name: "growth", prompt: getGrowthPrompt(idea, projectName) },
           { name: "unicorn", prompt: getUnicornPrompt(idea, projectName) },
+          { name: "qdrantThinking", prompt: getQdrantThinkingPrompt(idea, projectName) },
         ]
 
         // Lancer tous les appels en parallèle
         await Promise.all(
           categories.map(async (category) => {
             try {
+              console.log(`Generating ${category.name}...`)
               const data = await callMistral(category.prompt)
+              console.log(`✓ ${category.name} generated successfully`)
               controller.enqueue(
                 encoder.encode(`data: ${JSON.stringify({ type: category.name, data })}\n\n`)
               )
             } catch (error) {
-              console.error(`Error generating ${category.name}:`, error)
+              const errorMessage = error instanceof Error ? error.message : String(error)
+              const errorStack = error instanceof Error ? error.stack : undefined
+              console.error(`✗ Error generating ${category.name}:`, errorMessage)
+              if (errorStack) console.error('Stack:', errorStack)
               controller.enqueue(
-                encoder.encode(`data: ${JSON.stringify({ type: "error", category: category.name, error: String(error) })}\n\n`)
+                encoder.encode(`data: ${JSON.stringify({ 
+                  type: "error", 
+                  category: category.name, 
+                  error: errorMessage,
+                  details: errorStack 
+                })}\n\n`)
               )
             }
           })
